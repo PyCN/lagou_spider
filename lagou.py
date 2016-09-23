@@ -11,10 +11,10 @@ db = client.mongo
 
 def get_json(url, page, lang_name):
     data = {
-    'first':'True',
-    'pn':page,
-    'kd':lang_name
-    }
+    	'first':'True',
+    	'pn':page,
+    	'kd':lang_name
+    	}
     json = requests.post(url, data).json()
     return json
 
@@ -23,8 +23,11 @@ url = 'http://www.lagou.com/jobs/positionAjax.json?city=%E5%B9%BF%E5%B7%9E&needA
 def job_info(job_title):
     page = 1
     while True:
-        json = get_json(url, page, job_title)
-        list_con = json['content']['positionResult']['result']
+    	try:
+        	json = get_json(url, page, job_title)
+        	list_con = json['content']['positionResult']['result']
+    	except:
+    		continue
         # 如果list_con 为空列表就跳出循环
         if list_con:
             for i in list_con:
@@ -43,4 +46,4 @@ def job_info(job_title):
 
 if __name__ == '__main__':
     url = 'http://www.lagou.com/jobs/positionAjax.json?city=%E5%B9%BF%E5%B7%9E&needAddtionalResult=false'
-    job_info('数据挖掘')
+    job_info('运维')
